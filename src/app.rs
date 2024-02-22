@@ -12,12 +12,14 @@ pub fn run_app(app: gpui::App) {
     if args[1].contains("http") {
         app.run(move |cx| {
             Theme::init(cx);
-            cx.open_window(get_window_options(), build_workspace_view_remote);
+            let bounds = cx.displays().first().unwrap().bounds();
+            cx.open_window(get_window_options(bounds), build_workspace_view_remote);
         });
     } else {
         app.run(move |cx| {
             Theme::init(cx);
-            cx.open_window(get_window_options(), build_workspace_view);
+            let bounds = cx.displays().first().unwrap().bounds();
+            cx.open_window(get_window_options(bounds), build_workspace_view);
         });
     }
 }

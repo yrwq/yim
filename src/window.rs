@@ -1,26 +1,43 @@
-use gpui::*;
+use gpui::{
+    WindowOptions,
+    WindowBounds,
+    Bounds,
+    Point,
+    Size,
+    GlobalPixels,
+    TitlebarOptions,
+    WindowKind,
+    point,
+    px,
+};
 
-pub fn get_window_options() -> WindowOptions {
+pub static WIDTH: f64 = 800.0;
+pub static HEIGHT: f64 = 600.0;
+
+pub fn get_window_options(bounds: Bounds<GlobalPixels>) -> WindowOptions {
+    let width = GlobalPixels::from(WIDTH);
+    let height = GlobalPixels::from(HEIGHT);
     return WindowOptions {
-        bounds: gpui::WindowBounds::Fixed(gpui::Bounds {
-            origin: gpui::Point {
-                x: GlobalPixels::from(0.),
-                y: GlobalPixels::from(0.),
+        bounds: WindowBounds::Fixed(Bounds {
+            origin: Point {
+                x: GlobalPixels::from(bounds.center().x - width / 2.0),
+                y: GlobalPixels::from(bounds.center().y - height / 2.0),
             },
-            size: gpui::Size {
-                width: GlobalPixels::from(600.),
-                height: GlobalPixels::from(400.),
+            size: Size {
+                width: GlobalPixels::from(800.),
+                height: GlobalPixels::from(600.),
             },
         }),
-        titlebar: Some(gpui::TitlebarOptions {
-            title: Some("yim".into()),
+        titlebar: Some(TitlebarOptions {
+            title: None,
             appears_transparent: true,
-            traffic_light_position: None,
+            traffic_light_position: Some(point(px(8.), px(8.))),
+            // traffic_light_position: Some(point,
         }),
         center: true,
         focus: true,
         show: true,
-        kind: gpui::WindowKind::Normal,
+        kind: WindowKind::PopUp,
         is_movable: true,
         display_id: None,
     };
